@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import { AlertCircle } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -37,4 +35,4 @@ const CriteriaCard = ({ title, score, feedback, scoreColor }: CriteriaCardProps)
 	);
 };
 
-export default memo(CriteriaCard);
+export default CriteriaCard;

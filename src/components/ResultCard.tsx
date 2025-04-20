@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { CheckCircle2, Lightbulb } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -33,8 +31,8 @@ const ResultCard = ({ result, setShowAnalysis }: ResultCardProps) => {
 				</CardHeader>
 				<CardContent className='pt-0'>
 					<div className='flex items-center justify-center'>
-						<div className={cn('text-6xl font-bold dark:text-blue-400', getOverAllScoreColor(result?.overAll?.score))}>
-							{result?.overAll?.score?.toFixed(1)}
+						<div className={cn('text-6xl font-bold dark:text-blue-400', getOverAllScoreColor(result?.overallScore))}>
+							{result?.overallScore?.toFixed(1)}
 						</div>
 					</div>
 				</CardContent>
@@ -85,7 +83,7 @@ const ResultCard = ({ result, setShowAnalysis }: ResultCardProps) => {
 				</CardHeader>
 				<CardContent>
 					<ul className='space-y-2'>
-						{result?.overAll.suggestions.map((suggestion, index) => (
+						{result?.suggestions.map((suggestion, index) => (
 							<li key={index} className='flex items-start gap-2'>
 								<CheckCircle2 className='mt-0.5 size-5 shrink-0 text-green-500' />
 								<span>{suggestion}</span>

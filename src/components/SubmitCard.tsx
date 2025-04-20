@@ -1,7 +1,3 @@
-'use client';
-
-import { memo } from 'react';
-
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -46,4 +42,4 @@ const SubmitCard = ({ question, setQuestion, essay, setEssay, isLoading, handleS
 	);
 };
 
-export default memo(SubmitCard);
+export default SubmitCard;

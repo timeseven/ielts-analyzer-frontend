@@ -5,6 +5,10 @@ export interface CriteriaCardProps {
 	scoreColor?: string;
 }
 
+export interface EssayInput {
+	question: string;
+	essay: string;
+}
 export interface SubmitCardProps {
 	question: string;
 	setQuestion: (question: string) => void;
@@ -32,10 +36,8 @@ export interface ResultCardProps {
 			score: number;
 			feedback: string;
 		};
-		overAll: {
-			score: number;
-			suggestions: string[];
-		};
+		overallScore: number;
+		suggestions: string[];
 	} | null;
 
 	setShowAnalysis: React.Dispatch<React.SetStateAction<boolean>>;

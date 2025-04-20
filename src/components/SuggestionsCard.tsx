@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import { CheckCircle2, Lightbulb } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,4 +25,4 @@ const SuggestionsCard = ({ improvementSuggestions }: { improvementSuggestions: s
 	);
 };
 
-export default memo(SuggestionsCard);
+export default SuggestionsCard;
