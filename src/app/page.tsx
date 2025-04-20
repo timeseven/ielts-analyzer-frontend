@@ -1,103 +1,82 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+
+import { toast } from 'sonner';
+
+import ResultCard from '@/components/ResultCard';
+import SubmitCard from '@/components/SubmitCard';
+import { ResultCardProps } from '@/types/card';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+	const [showAnalysis, setShowAnalysis] = useState(false);
+	const [question, setQuestion] = useState('');
+	const [essay, setEssay] = useState('');
+	const [result, setResult] = useState<ResultCardProps['result'] | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+	const handleSubmit = () => {
+		if (!question.trim() || !essay.trim()) {
+			toast.error('Please enter both question and essay content.');
+			return;
+		}
+
+		setIsLoading(true);
+
+		setTimeout(() => {
+			setIsLoading(false);
+			setResult({
+				taskResponse: {
+					score: 3,
+					feedback:
+						"Your response addresses all parts of the task. You've developed your position well, but could provide more specific examples to support your arguments. Consider elaborating on key points with concrete evidence.",
+				},
+				coherenceCohesion: {
+					score: 5.5,
+					feedback:
+						'Your essay has a clear overall progression with good use of cohesive devices. However, some paragraphs lack a clear central topic. Work on creating stronger topic sentences and ensuring each paragraph has a single focus.',
+				},
+				lexicalResource: {
+					score: 6.5,
+					feedback:
+						'You demonstrate a good range of vocabulary with generally accurate word choice. There are occasional errors in word formation and spelling. Try to incorporate more academic vocabulary and complex lexical items.',
+				},
+				grammaticalRange: {
+					score: 8,
+					feedback:
+						'You use a mix of simple and complex structures, but with some errors in grammar and punctuation. Focus on controlling complex sentences and review your use of articles and prepositions.',
+				},
+				overAll: {
+					score: 7.0,
+					suggestions: [
+						'Develop more specific examples to support your arguments',
+						'Strengthen paragraph structure with clearer topic sentences',
+						'Incorporate more academic vocabulary',
+						'Practice complex grammatical structures',
+						'Review article and preposition usage',
+					],
+				},
+			});
+			setShowAnalysis(true);
+		}, 2000);
+	};
+	return (
+		<main className='min-h-screen bg-gray-50 p-4 md:p-8 dark:bg-gray-950'>
+			<div className='mx-auto max-w-4xl'>
+				<h1 className='mb-6 text-center text-2xl font-bold md:text-3xl'>IELTS Writing Analysis</h1>
+				{!showAnalysis ? (
+					<SubmitCard
+						question={question}
+						setQuestion={setQuestion}
+						essay={essay}
+						setEssay={setEssay}
+						isLoading={isLoading}
+						handleSubmit={handleSubmit}
+					/>
+				) : (
+					<ResultCard result={result} setShowAnalysis={setShowAnalysis} />
+				)}
+			</div>
+		</main>
+	);
 }
