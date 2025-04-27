@@ -1,8 +1,13 @@
 import { apiVersion } from '@/lib/consts';
 import { EssayInput } from '@/types/card';
 
+const apiBase = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
+
+const apiFetch = (path: string, options?: RequestInit) => {
+	return fetch(`${apiBase}${path}`, options);
+};
 export const analyzeEssay = async ({ question, essay }: EssayInput) => {
-	const response = await fetch(`/api/${apiVersion}/analyze`, {
+	const response = await apiFetch(`/api/${apiVersion}/analyze`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
